@@ -4,6 +4,11 @@
 import openai
 import os
 
+# The global variables
+COMPLETION_MODEL = 'gpt-3.5-turbo'
+COMPLETION_MODEL_DEPLOYMENT_NAME = ''
+EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = ''
+
 def set_openai_config():
     #KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth, KeysFromManagedId
     match os.getenv('OPENAI_AUTH_TYPE'):
@@ -23,6 +28,20 @@ def set_openai_config():
             print("Setup environment variable OPENAI_AUTH_TYPE to one of KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth, KeysFromManagedId")
     return
 
+# Read all the needed secrets from AKV
+def set_openai_global_config_parameters(client):
+    openai.api_key = client.get_secret('openai-api-key').value
+    openai.api_base = client.get_secret('openai-endpoint').value
+    openai.api_version = client.get_secret('openai-api-version').value
+    openai.api_type = 'azure'
+    global COMPLETION_MODEL_DEPLOYMENT_NAME
+    global EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
+    COMPLETION_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-gpt-35-turbo-deployment-name').value
+    EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-text-embedding-deployment-name').value
+    return
+    
+# Use this only for debugging purposes, in case you need a quick and dirty
+# way to add the keys to bypass the AKV approach.
 def get_config_from_os_env():
     openai.api_key = os.getenv('OPENAI_KEY')
     openai.api_base = os.getenv('OPENAI_ENDPOINT')
@@ -44,11 +63,8 @@ def get_config_from_key_vault_cli_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
-
-    openai.api_key = client.get_secret('openai-api-key').value
-    openai.api_base = client.get_secret('openai-endpoint').value
-    openai.api_version = client.get_secret('openai-api-version').value
-    openai.api_type = 'azure'
+    set_openai_global_config_parameters(client)
+    
     return
 
 # Using Azure Key Vault to get Azure OpenAi Endpoint and Key
@@ -63,22 +79,22 @@ def get_config_from_key_vault_mi_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
+    set_openai_global_config_parameters(client)
 
-    openai.api_key = client.get_secret('openai-api-key').value
-    openai.api_base = client.get_secret('openai-endpoint').value
-    openai.api_version = client.get_secret('openai-api-version').value
-    openai.api_type = 'azure'
     return
-
 
 # Prompt Completion Function
 def get_completion(
                     prompt, 
-                    engine="tr-non-prod-openai-gpt-35-turbo0301", 
-                    model="gpt-3.5-turbo",
+                    engine=None, 
+                    model=None,
                     temperature=0
                 ):
     messages = [{"role": "user", "content": prompt}]
+    if engine is None:
+        engine = COMPLETION_MODEL_DEPLOYMENT_NAME
+    if model is None:
+        model = COMPLETION_MODEL
     response = openai.ChatCompletion.create(
         engine=engine,
         model=model,
@@ -90,10 +106,14 @@ def get_completion(
 # Prompt Message Function, most suitable for Chtbots
 def get_completion_from_messages(
                         messages, 
-                        engine="tr-non-prod-openai-gpt-35-turbo0301", 
-                        model="gpt-3.5-turbo", 
+                        engine=None, 
+                        model=None,
                         temperature=0
                     ):
+    if engine is None:
+        engine = COMPLETION_MODEL_DEPLOYMENT_NAME
+    if model is None:
+        model = COMPLETION_MODEL
     response = openai.ChatCompletion.create(
         engine=engine,
         model=model,
@@ -106,8 +126,10 @@ def get_completion_from_messages(
 # Generate Embeddings
 def get_embeddings_from_text(
                         text,
-                        engine="tr-non-prod-openai-text-embedding-ada"
+                        engine=None
                     ):
+    if engine is None:
+        engine = EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME 
     response = openai.Embedding.create(
         input=text,
         engine=engine

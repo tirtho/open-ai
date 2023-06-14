@@ -3,26 +3,44 @@
 
 import os
 
-def get_content_safety_config():
+# The global variables
+CONTENT_SAFETY_ENDPOINT_VALUE = ''
+CONTENT_SAFETY_KEY_VALUE = ''
+
+def set_content_safety_config():
     #KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth
     match os.getenv('OPENAI_AUTH_TYPE'):
         case 'KeysFromAKVWithCLIAuth':
             print("Getting Azure Content Safety Credentials from Azure Key Vault with Azure CLI Auth")
-            return get_content_safety_config_from_key_vault_cli_auth()
+            get_content_safety_config_from_key_vault_cli_auth()
         case 'KeysFromAKVWithMI':
             print("Getting Azure Content Safety Credentials from Azure Key Vault with Azure Managed Identity Auth")
-            return get_content_safety_config_from_key_vault_mi_auth()
+            get_content_safety_config_from_key_vault_mi_auth()
         case 'KeysFromEnv':
             print("Getting Azure Content Safety Credentials from environment variables set in the OS")
-            return get_content_safety_config_from_os_env()
+            get_content_safety_config_from_os_env()
         case _:
             print("Setup environment variable OPENAI_AUTH_TYPE to one of KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth")
-    return 'NOT_FOUND', 'NOT_FOUND'
+    return get_content_safety_global_config_parameters()
 
 def get_content_safety_config_from_os_env():
-    key = os.getenv('CONTENT_SAFETY_KEY')
-    endpoint = os.getenv('CONTENT_SAFETY_ENDPOINT')
-    return key, endpoint
+    global CONTENT_SAFETY_KEY_VALUE
+    global CONTENT_SAFETY_ENDPOINT_VALUE
+    CONTENT_SAFETY_KEY_VALUE = os.getenv('CONTENT_SAFETY_KEY')
+    CONTENT_SAFETY_ENDPOINT_VALUE = os.getenv('CONTENT_SAFETY_ENDPOINT')
+    return
+
+# Set the global config variables after reading all the needed secrets from AKV
+def set_content_safety_global_config_parameters(client):
+    global CONTENT_SAFETY_KEY_VALUE
+    global CONTENT_SAFETY_ENDPOINT_VALUE
+    CONTENT_SAFETY_KEY_VALUE = client.get_secret('content-safety-api-key').value
+    CONTENT_SAFETY_ENDPOINT_VALUE = client.get_secret('content-safety-endpoint').value
+    return
+
+# Return all the global config variables
+def get_content_safety_global_config_parameters():
+    return CONTENT_SAFETY_KEY_VALUE, CONTENT_SAFETY_ENDPOINT_VALUE
 
 # Using Azure Key Vault to get Azure Azure Content Safety Endpoint and Key
 # to Authenticate Azure OpenAI to run API calls
@@ -36,10 +54,9 @@ def get_content_safety_config_from_key_vault_cli_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
-
-    key = client.get_secret('content-safety-api-key').value
-    endpoint = client.get_secret('content-safety-endpoint').value
-    return key, endpoint
+    set_content_safety_global_config_parameters(client)
+    
+    return
 
 # Using Azure Key Vault to get Azure Content Safety Endpoint and Key
 # to run API calls
@@ -53,10 +70,9 @@ def get_content_safety_config_from_key_vault_mi_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
-
-    key = client.get_secret('content-safety-api-key').value
-    endpoint = client.get_secret('content-safety-endpoint').value
-    return key, endpoint
+    set_content_safety_global_config_parameters(client)
+    
+    return
 
 def get_content_safety(client, text_input):
     from azure.core.exceptions import HttpResponseError

@@ -62,7 +62,7 @@ For authentication mode, in your OS set the environment variable <b>OPENAI_AUTH_
 - pip install azure-identity
 - pip install azure-keyvault, azure-keyvault-certificates, azure-keyvault-keys, azure-keyvault-secrets
 - pip install openai
-- pip install numpy, num2words, pandas
+- pip install numpy, num2words, pandas, matplotlib, scipy, scikit-learn, tiktoken
 ### Operation
 Opem a CommandPromt/terminal/shell and go to the open-ai folder from this code-base.
 In your OS set the environment variables
