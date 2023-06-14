@@ -68,7 +68,7 @@ Opem a CommandPromt/terminal/shell and go to the open-ai folder from this code-b
 In your OS set the environment variables
 - <b>KEY_VAULT_URL</b> to the value from the AKV instance
 - <b>OPENAI_AUTH_TYPE</b> to KeysFromAKVWithCLIAuth
-- <b>PYTHONPATH</b> to %cd%\AzureOpenAIHelperFunctions for Windows (or ./AzureOpenAIHelperFunctions for Linux)
+- <b>PYTHONPATH</b> to <i>%cd%\AzureOpenAIHelperFunctions</i> for Windows (or ./AzureOpenAIHelperFunctions for Linux)
 An example env.bat file is availble here in this codebase as well.
 
 Make sure you have logged in to Azure from command line or from a browser.
