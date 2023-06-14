@@ -31,16 +31,16 @@ You need
   - The Deployment Name as <b>openai-gpt-35-turbo-deployment-name</b> for the <i>gpt-35-turbo</i> model deployed in the above steps
   - The Deployment Name as <b>openai-text-embedding-deployment-name</b> for the <i>text-embedding-ada-002</i> model deployed in the above steps
   - The Azure Open AI version as <b>openai-api-version</b>
-- You will find instructions here - https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal
+- You will find instructions [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal)
 #### Azure AI Content Safety API 
 This is needed if you want to run the  notebooks under ResponsibleAI. Otherwise skip this section.
 - Create and instance of Azure Content Safety
 - Note down 
   - The API key as <b>content-safety-api-key</b>
   - The API Endpoint as <b>content-safety-endpoint</b>
-- You will find instructions here - https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/overview
+- You will find instructions [here](https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/overview)
 #### Azure Key Vault
-- Create an Azure Key Vault (AKV) in your subscription. You will find instructions here - https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal.
+- Create an Azure Key Vault (AKV) in your subscription. You will find instructions [here](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal)
 - In the AKV add your Azure Active Directory (AAD) ID with the <b>Key Vault Secrets Officer</b> role. Also, make sure this AAD ID is allowed to login to the corresponding Azure Subscription.
 - Add the following Secrets in the AKV. These are items you have already obtained from the above steps for each of the Azure Services.
   - Name <b>openai-api-key</b> & value obtained from above steps
@@ -75,6 +75,7 @@ Make sure you have logged in to Azure from command line or from a browser.
 
 Now, to run the notebooks, run 
 > jupyter notebook
+
 This will open up Jupyter Notebook and display all the folders where you have notebooks.
 
 If you do not want to run the notebooks, but the python codes in the PythonCommandLine folder, go to that folder and run
