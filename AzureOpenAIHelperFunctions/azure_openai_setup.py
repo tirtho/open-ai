@@ -4,7 +4,7 @@
 import openai
 import os
 
-# The global variables
+# The global variables with any default values
 COMPLETION_MODEL = 'gpt-3.5-turbo'
 COMPLETION_MODEL_DEPLOYMENT_NAME = ''
 EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = ''
@@ -39,7 +39,11 @@ def set_openai_global_config_parameters(client):
     COMPLETION_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-gpt-35-turbo-deployment-name').value
     EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-text-embedding-deployment-name').value
     return
-    
+
+# Return the global variables with their current value
+def get_openai_global_config_parameters():
+    return openai, COMPLETION_MODEL, COMPLETION_MODEL_DEPLOYMENT_NAME
+
 # Use this only for debugging purposes, in case you need a quick and dirty
 # way to add the keys to bypass the AKV approach.
 def get_config_from_os_env():
