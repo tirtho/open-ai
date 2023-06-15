@@ -18,7 +18,7 @@ You need
 - Azure Subscription with enough permissions to 
   - [Create Azure Open AI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview)
   - [Create Azure AI Content Safety Service](https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/overview)
-  - [Create or 'Key Vault Secrets Officer' access rights to Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview)
+  - [Create Azure Key Vault or add 'Key Vault Secrets Officer' access rights to you in existing Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview)
 - [Jupyter Notebook](https://docs.jupyter.org/en/latest/install/notebook-classic.html)
 
 ### Setup
