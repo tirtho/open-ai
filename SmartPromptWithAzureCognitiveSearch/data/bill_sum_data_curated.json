@@ -1,0 +1,124 @@
+{
+"bills": [
+{
+    "BillId":"110_hr37",
+    "Title":"To amend the Internal Revenue Code of 1986 to encourage businesses to improve math and science education at elementary and secondary schools.",
+    "Summary":"National Science Education Tax Incentive for Businesses Act of 2007 - Amends the Internal Revenue Code to allow a general business tax credit for contributions of property or services to elementary and secondary schools and for teacher training to promote instruction in science, technology, engineering, or mathematics .",
+    "Tokens":1466
+},
+{
+    "BillId":"112_hr2873",
+    "Title":"To amend the Internal Revenue Code of 1986 to provide a credit to employers for the retention of certain individuals hired before 2013.",
+    "Summary":"Small Business Expansion and Hiring Act of 2011 - Amends the Internal Revenue Code to allow nongovernmental employers who employ an average of fewer than 100 employees during a taxable year a retained worker tax credit until December 31, 2012, for the lesser of $4,000 or 6.2 of the wages paid to a retained worker during a period of not less than 52 consecutive weeks of employment. Limits the amount of such credit with respect to any business location of the employer to $400,000 and provides that the number of retained workers taken into account for such credit shall not exceed the excess of the number of employees of the taxpayer at the end of the taxable year over the number of such employees at the beginning of the taxable year. Defines retained worker to mean any qualified individual who was employed on any date during the taxable year for a period of not less than 52 weeks and whose wages during the last 26 weeks of such period equaled at least 80 of such wages for the first 26 weeks of such period. Defines qualified individual as any individual who: (1) begins employment after 2010 and before 2014, (2) certifies by signed affidavit that such individual has not been employed for 40 hours or more per week during the 60-day period ending on the date such individual begins employment, (3) is not replacing another employee, and (4) is not disqualified for such credit by a relationship to the employer.",
+    "Tokens":1183
+},
+{
+    "BillId":"109_s2408",
+    "Title":"A bill to require the Director of National Intelligence to release documents captured in Afghanistan or Iraq during Operation Desert Storm, Operation Enduring Freedom, or Operation Iraqi Freedom.",
+    "Summary":"Requires the Director of National Intelligence to make publicly available on an Internet website all documents captured in Afghanistan or Iraq during Operations Desert Storm, Enduring Freedom, or Iraqi Freedom. Provides conditions under which the Director shall not be required to make a captured document publicly available, including providing a list of retained documents, and the criteria used for such retention, to the congressional intelligence committees.",
+    "Tokens":937
+},
+{
+    "BillId":"108_s1899",
+    "Title":"A bill to improve data collection and dissemination, treatment, and research relating to cancer, and for other purposes.",
+    "Summary":"National Cancer Act of 2003 - Amends the Public Health Service Act to direct the Secretary of Health and Human Services to develop an information-sharing plan for State cancer registries. Modifies provisions concerning preventive health measures with respect to breast and cervical cancers to permit priority to be given to certain projects involving: (1) colorectal cancer screening and outreach. And (2) treating uninsured women diagnosed with cancer during such screening. Authorizes specified waivers of the direct services requirement for breast and cervical cancer screening grants. Authorizes the Secretary to award grants to eligible entities to educate cancer patients and their families about medical techniques to reduce and prevent pain, survivorship care and support programs, and related community resources. Requires a national cancer research center to have a practitioner education program that includes pain and symptom management and survivorship care. Amends various provisions of the Act to emphasize the importance of pain and symptom management throughout the nation's cancer programs. Establishes within the National Cancer Institute an Office on Cancer Survivorship. Authorizes the Director of NCI to co-fund grant projects for various cancer programs. Expresses the sense of the Senate with respect to: (1) cancer survivorship, and (2) institutional review board procedures.",
+    "Tokens":3670
+},
+{
+    "BillId":"107_s1531",
+    "Title":"A bill to amend the Internal Revenue Code of 1986 to provide a waiver of the early withdrawal penalty for distributions from qualified retirement plans to individuals called to active duty during the national emergency declared by the President on September 14, 2001, and for other purposes.",
+    "Summary":"Military Call-up Relief Act - Amends the Internal Revenue Code to waive the ten percent early withdrawal penalty for distributions from qualified retirement plans to individuals called to active duty during the national emergency declared by the President on September 14, 2001.",
+    "Tokens":1038
+},
+{
+    "BillId":"107_hr4541",
+    "Title":"To provide for reliquidation of entries prematurely liquidated by the United States Customs Service.",
+    "Summary":"Requires the Customs Service to reliquidate certain entries prematurely liquidated and to refund any amounts owed.",
+    "Tokens":2026
+},
+{
+    "BillId":"111_s1495",
+    "Title":"A bill to require the Secretary of Veterans Affairs to carry out a pilot program to assess the feasibility and advisability of using service dogs for the treatment or rehabilitation of veterans with physical or mental injuries or disabilities, and for other purposes.",
+    "Summary":"Service Dogs for Veterans Act of 2009 - Directs the Secretary of Veterans Affairs (VA) to commence a three-year pilot program to assess the benefits, feasibility, and advisability of using service dogs for the treatment or rehabilitation of veterans with physical or mental injuries or disabilities, including post-traumatic stress disorder. Requires related reports to Congress.",
+    "Tokens":880
+},
+{
+    "BillId":"111_s3885",
+    "Title":"A bill to provide incentives for States and local educational agencies to implement comprehensive reforms and innovative strategies that are designed to lead to significant improvement in outcomes for all students and significant reductions in achievement gaps among subgroups of students, and for other purposes.",
+    "Summary":"Race to the Top Act of 2010 - Directs the Secretary of Education to award competitive grants to states and local educational agencies (LEAs) to implement reforms and innovations designed to improve educational outcomes significantly for all students and reduce achievement gaps significantly among specified student subgroups. Requires each grant applicant to have a comprehensive and coherent plan for doing so that includes, if applicable: (1) improving the effectiveness of teachers and school leaders and promoting their equitable distribution, (2) strengthening the use of data to improve education. (3) implementing internationally benchmarked, college- and career-ready elementary and secondary academic standards, (4) turning around its lowest-performing schools. (5) supporting, or coordinating with, early learning programs for high-need children from birth through third grade. And (6) creating or maintaining successful conditions for high-performing charter schools and other innovative, autonomous public schools. Requires each grantee to establish performance measures that track its progress in implementing its plan, and improving educational outcomes for students and specified student subgroups. Gives grant priority to LEAs with the highest number or percentages of impoverished children and those that serve rural schools. Requires each state grantee to use at least 50 of its grant for subgrants to LEAs that participate in its plan. Allows LEAs to receive a grant and subgrant for the same fiscal year.",
+    "Tokens":2815
+},
+{
+    "BillId":"113_hr1796",
+    "Title":"Troop Talent Act of 2013",
+    "Summary":"Troop Talent Act of 2013 - Directs the Secretaries of the military departments, to the maximum extent practicable, to make information on civilian credentialing opportunities available to members of the Armed Forces (members) beginning with, and at every stage of, their training for military occupational specialities, in order to permit such members to: (1) evaluate the extent to which such training correlates with skills and training required for various civilian certifications and licenses, and (2) assess the suitability of such training for obtaining and pursuing such certifications and licenses. Requires the information made available to: (1) be consistent with the Transition Goals Plans Success program, and (2) include information on the civilian occupational equivalents of military occupational specialties. Requires such Secretaries to make available to civilian credentialing agencies specified information on the content of military training provided to members. Allows members or veterans to use educational assistance provided through the Department of Defense (DOD) or the Department of Veterans Affairs (VA) in pursuit of a civilian certification or license only if the successful completion of a curriculum fully qualifies such student to take the appropriate examination and be certified or licensed to meet any other academic conditions required for entry into that occupation or profession. Requires the military occupational specialties designated for a military skills to civilian credentialing pilot program under the National Defense Authorization Act for Fiscal Year 2012 to include those specialties relating to the military information technology workforce. Directs the VA Secretary to reestablish the Professional Certification and Licensure Advisory Committee . Provides additional Committee duties, including the development of: (1) guidance for audits of licensure and certification programs in order to ensure high-quality education to members and veterans, and (2) a plan to improve outreach to members and veterans on the importance of licensing and certification and the availability of educational benefits.",
+    "Tokens":2479
+},
+{
+    "BillId":"103_hr1987",
+    "Title":"Taxpayer's Right to View Act of 1993",
+    "Summary":"Taxpayer's Right to View Act of 1993 - Amends the Communications Act of 1934 to prohibit a cable operator from assessing separate charges for any video programming of a sporting, theatrical, or other entertainment event if that event is performed at a facility constructed, renovated, or maintained with tax revenues or by an organization that receives public financial support. Authorizes the Federal Communications Commission and local franchising authorities to make determinations concerning the applicability of such prohibition. Sets forth conditions under which a facility is considered to have been constructed, maintained, or renovated with tax revenues. Considers events performed by nonprofit or public organizations that receive tax subsidies to be subject to this Act if the event is sponsored by, or includes the participation of a team that is part of, a tax exempt organization.",
+    "Tokens":947
+},
+{
+    "BillId":"103_hr1677",
+    "Title":"Full-Service Schools Act",
+    "Summary":"Full-Service Schools Act - Establishes the Federal Interagency Work Group to facilitate collaboration among Federal agencies and make grants to States and local entities in order to integrate education, health, and social and human services for at-risk children and their families. Provides that the Group shall be composed of the Secretaries of Education, Health and Human Services, and Labor and funded equally by their departments. Sets forth Group duties and State and local eligibility requirements. Sets forth application requirements and grant limitations. Requires local programs to include activities to improve educational performance by: (1) reducing school dropout and teen pregnancy rates and the number of children in unsupervised settings. (2) increasing adultfamily literacy and the number of students returning to school after dropping out. And (3) improving access to primary health care for families and their children. Allows local programs to develop a variety of programs to serve the comprehensive needs of students, including specified optional activities. Authorizes appropriations.",
+    "Tokens":2164
+},
+{
+    "BillId":"111_s3149",
+    "Title":"A bill to amend the Internal Revenue Code of 1986 to limit certain executive compensation paid by systemically significant financial institutions.",
+    "Summary":"Wall Street Compensation Reform Act of 2010 - Amends the Internal Revenue Code to restrict the tax deduction for compensation paid to highly-paid employees of systemically significant financial institutions. Requires such compensation to be performance-based, to vest no earlier than five years after the date of payment, and to consist of 50 employer stock. Prohibits such highly-paid employees from using personal hedging strategies and remuneration or liability-related insurance and requires forfeiture of compensation paid to a chief executive or financial officer of such an institution if an accounting restatement is required due to material noncompliance, as a result of misconduct, with any federal financial reporting requirement. Defines a systemically significant financial institution as an entity which engages primarily in financial activities and which: (1) owns or controls assets greater than $25 billion. Or (2) owns or controls assets greater than $10 billion and maintains a ratio of debt to equity greater than 20 to 1. Requires each systemically significant financial institution which is a publicly held corporation to make an annual report on its compensation policies and practices to the Securities and Exchange Commission (SEC) and make such report publicly available.",
+    "Tokens":2331
+},
+{
+    "BillId":"110_hr1007",
+    "Title":"To amend the Marine Mammal Protection Act of 1972 to repeal the long-term goal for reducing to zero the incidental mortality and serious injury of marine mammals in commercial fishing operations, and to modify the goal of take reduction plans for reducing such takings.",
+    "Summary":"Amends the Marine Mammal Protection Act of 1972 to repeal the long-term goal of reducing to zero the incidental mortality and serious injury of marine mammals in commercial fishing operations. Makes reduction of such incidental mortality and serious injury the long-term goal.",
+    "Tokens":1192
+},
+{
+    "BillId":"113_hr3137",
+    "Title":"Freedom and Mobility in Consumer Banking Act",
+    "Summary":"Freedom and Mobility in Consumer Banking Act - Amends the Truth in Savings Act to prohibit depository institutions from: (1) prohibiting a consumer from closing a covered account , regardless of whether the balance is positive, zero, or negative, (2) charging any fee to close such account. Or (3) reopening such an account to apply subsequent debits after a consumer has requested the account to be closed, unless the consumer requests that the account be reopened. Requires depository institutions to provide consumers with a description of the policies and procedures in place to close such accounts at the time the account is opened, upon request, and on the websites of such institutions. Directs the CFPB to prescribe regulations relating to the closure of such accounts, including: (1) allowing consumers to receive available funds from a closed account in the form of a cashier's check, electronic funds transfer, or any other means offered by the institution or determined appropriate by the CFPB. (2) requiring depository institutions to provide consumers with certain information regarding any preauthorized transactions or direct deposits associated with an account before it is closed. (3) prohibiting a depository institution from reporting adverse information regarding such account to any consumer reporting agency if, at the time the account is closed, the account has a negative balance resulting solely from any fee assessed by the depository institution. And (4) establishing the terms under which a depository institution may report to a consumer reporting agency that an account had a negative closing balance, provided that the institution notifies the consumer and provides a reasonable period for repayment of the balance. Directs the Comptroller General (GAO) to report to Congress and the CFPB regarding additional barriers that could limit the ability of a consumer to close a covered account. Requires the CFPB, after receiving such report, to determine whether regulations should be issued to remove such barriers.",
+    "Tokens":2402
+},
+{
+    "BillId":"115_hr1634",
+    "Title":"Education and Training for Health Act of 2017",
+    "Summary":"Education and Training for Health Act of 2017 or the EAT for Health Act of 2017 This bill directs the Department of Health and Human Services to issue guidelines to federal agencies to ensure that federal, full time primary care health professionals have continuing education relating to nutrition. Agencies must annually report information including the extent to which they have adopted and encouraged the guidelines. The continuing education must: (1) include content on the role of nutrition in the prevention, management, and reversal of obesity, cardiovascular disease, diabetes, or cancer. And (2) meet requirements for continuing medical education or continuing education by medical or nurse practitioner professional organizations or certified accrediting bodies.",
+    "Tokens":1648
+},
+{
+    "BillId":"103_hr1815",
+    "Title":"Recreational Hunting Safety and Preservation Act of 1993",
+    "Summary":"Recreational Hunting Safety and Preservation Act of 1993 - Makes it unlawful to intentionally obstruct a lawful hunt on Federal lands. Establishes: (1) civil penalties for such violations, (2) procedures for individual and government agent complaints. And (3) permitted uses of collected penalty money. Authorizes injunctive relief. Permits an affected individual or sportsman's organization to bring a civil action to recover actual and punitive damages and attorney's fees.",
+    "Tokens":2209
+},
+{
+    "BillId":"113_s1773",
+    "Title":"Andrew's Law",
+    "Summary":"Andrew Prior Act or Andrew's Law - Amends the Truth in Lending Act to discharge the repayment obligations of the estate of a borrower and any cosigner of a private educational loan if the borrower dies or is totally and permanently disabled. Requires the Director of the Consumer Financial Protection Bureau (CFPB) to develop necessary and appropriate safeguards to prevent fraud and abuse in the discharge of those obligations. Authorizes the Director to promulgate regulations to reinstate those obligations in any case in which the Director determines that doing so is necessary to protect the public interest.",
+    "Tokens":608
+},
+{
+    "BillId":"106_hr5585",
+    "Title":"Energy Independence Act of 2000",
+    "Summary":"Directs the President, in coordination with designated Secretaries, to establish: (1) a demonstration program for fuel cell proton exchange membrane technology for commercial, residential, and transportation applications within the Secretaries' respective areas. And (2) a comprehensive proton exchange membrane fuel cell bus demonstration program to address hydrogen production, storage, and use in transit bus applications. Mandates that each Federal agency that maintains a motor vehicle fleet develop a plan for fleet transition to vehicles powered by fuel cell technology. Directs the Secretary of Energy to establish a fuel cell technology grant program for State or local government to meet their energy requirements, including such technology as a motor vehicle power source. Authorizes appropriations.",
+    "Tokens":1352
+},
+{
+    "BillId":"114_hr2499",
+    "Title":"Veterans Entrepreneurship Act of 2015",
+    "Summary":"This measure has not been amended since it was passed by the Senate on July 23, 2015. Veterans Entrepreneurship Act of 2015 Amends the Small Business Act to prohibit the Small Business Administration (SBA) from collecting a guarantee fee in connection with a loan made under the SBA Express Program to a veteran or the spouse of a veteran on or after October 1, 2015, except during any upcoming fiscal year for which the President's budget, submitted to Congress, includes a cost for the Program that is above zero. Requires the SBA to assess for Congress the level of outreach to and consultation with female veterans regarding access to capital by women's business centers and Veterans Business Outreach Centers. Amends the Consolidated and Further Continuing Appropriations Act, 2015 to increase the limit from $18.75 billion to $23.5 billion for FY2015 commitments for general business loans for a combination of amortizing term loans and the aggregated maximum line of credit provided by revolving loans. Amends the Small Business Act to prohibit the SBA, starting October 1, 2015, from guaranteeing a loan if: the lender determines that the borrower is unable to obtain credit elsewhere solely because the lender's liquidity depends upon the guaranteed portion of the loan being sold on the secondary market, or the sole purpose for requesting the guarantee is to allow the lender to exceed its legal lending limit.",
+    "Tokens":1393
+},
+{
+    "BillId":"111_hr3141",
+    "Title":"To amend title XIX of the Social Security Act to provide for a DSH redistribution pool from unexpended Medicaid DSH allotments in order to increase Medicaid DSH allotments for low DSH States and to provide grants for health access networks serving the uninsured.",
+    "Summary":"Strengthening the Health Care Safety Net Act of 2009 - Amends title XIX (Medicaid) of the Social Security Act to establish a disproportionate share hospital (DSH) redistribution pool from unexpended Medicaid DSH allotments to fund an increase in allotments for low DSH states. Directs the Secretary of Health and Human Services to award demonstration grants to health access networks to improve access, quality, and continuity of care for uninsured individuals through better coordination of care by such networks.",
+    "Tokens":2678
+}
+]
+}

@@ -3,6 +3,7 @@
 
 import openai
 import os
+from langchain.embeddings import OpenAIEmbeddings
 
 # The global variables with any default values
 COMPLETION_MODEL = 'gpt-3.5-turbo'
@@ -126,6 +127,19 @@ def get_completion_from_messages(
     )
     #     print(str(response.choices[0].message))
     return response.choices[0].message["content"]
+
+# Create the embedding instance
+def get_azure_openai_embeddings(deployment=None):
+    # set the environment variables needed for openai package to know to reach out to azure
+    import os
+    os.environ["OPENAI_API_TYPE"] = openai.api_type
+    os.environ["OPENAI_API_BASE"] = openai.api_base
+    os.environ["OPENAI_API_KEY"] = openai.api_key
+    os.environ["OPENAI_API_VERSION"] = openai.api_version
+
+    if deployment is None:
+        deployment = EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
+    return OpenAIEmbeddings(deployment=deployment)
 
 # Generate Embeddings
 def get_embeddings_from_text(
