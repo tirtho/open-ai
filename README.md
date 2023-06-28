@@ -44,6 +44,10 @@ This is needed if you want to run the notebooks under [ResponsibleAI]. Otherwise
 #### Azure Cognitive Search
 This is neeed if you want to run the notebooks under [SmartPromptWithAzureCognitiveSearch]. Otherwise skip this section.
 - Create an instance of Azure Cognitive Search, if not already created
+- Note down
+  - The Admin API Key as <b>cognitive-search-api-key</b>
+  - The Cognitive Search Endpoint as <b>cognitive-search-endpoint</b>
+  - Decide on a name for your search index (ideally not already being used) as <b>cognitive-search-index</b>
 - You will find instructions [here](https://learn.microsoft.com/en-us/azure/search/search-create-service-portal)
 #### Azure Key Vault
 - Create an Azure Key Vault (AKV) in your subscription. You will find instructions [here](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal)
@@ -77,7 +81,8 @@ For authentication mode, in your OS set the environment variable <b>OPENAI_AUTH_
 - pip install azure-keyvault, azure-keyvault-certificates, azure-keyvault-keys, azure-keyvault-secrets
 - pip install openai
 - pip install numpy, num2words, pandas, matplotlib, scipy, scikit-learn, tiktoken
-- pip install langchain (optional, only if you want to try the LangChain notebooks)
+- pip install langchain (optional, only if you want to try the LangChain notebooks)\
+
 Optionally, install the below preview azure-search package, if you want to run the [SmartPromptWithAzureCognitiveSearch] notebooks.
 - pip install --index-url=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/ azure-search-documents==11.4.0a20230509004
 ### Operation
