@@ -6,6 +6,7 @@
   - Content Safety APIs
   - Embedding APIs
   - LangChain
+  - Smart prompting with Azure Cognitive Search, Open AI and LangChain
   - Misc
 - Command line Python code example to leverage the Open AI libraries
 
@@ -13,12 +14,13 @@ All examples use Azure Active Directory (AAD) auth and use Managed Identity to a
 
 ### Prerequisites
 You need 
-- [Python 3.x](https://www.python.org/)
+- [Python 3][Python 3.x]
   -   Your Python installation should include [pip](https://pip.pypa.io/en/stable/)
 - Azure Subscription with enough permissions to 
   - [Create Azure Open AI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview)
   - [Create Azure AI Content Safety Service](https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/overview)
   - [Create Azure Key Vault or add 'Key Vault Secrets Officer' access rights to you in existing Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview)
+  - [Create Azure Cognitive Search](https://learn.microsoft.com/en-us/azure/search/search-get-started-portal)
 - [Jupyter Notebook](https://docs.jupyter.org/en/latest/install/notebook-classic.html)
 
 ### Setup
@@ -32,13 +34,17 @@ You need
   - The Deployment Name as <b>openai-text-embedding-deployment-name</b> for the <i>text-embedding-ada-002</i> model deployed in the above steps
   - The Azure Open AI version as <b>openai-api-version</b>
 - You will find instructions [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal)
-#### Azure AI Content Safety API 
-This is needed if you want to run the  notebooks under ResponsibleAI. Otherwise skip this section.
-- Create and instance of Azure Content Safety
+#### Azure AI Content Safety API
+This is needed if you want to run the notebooks under [ResponsibleAI]. Otherwise skip this section.
+- Create an instance of Azure Content Safety
 - Note down 
   - The API key as <b>content-safety-api-key</b>
   - The API Endpoint as <b>content-safety-endpoint</b>
 - You will find instructions [here](https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/overview)
+#### Azure Cognitive Search
+This is neeed if you want to run the notebooks under [SmartPromptWithAzureCognitiveSearch]. Otherwise skip this section.
+- Create an instance of Azure Cognitive Search, if not already created
+- You will find instructions [here](https://learn.microsoft.com/en-us/azure/search/search-create-service-portal)
 #### Azure Key Vault
 - Create an Azure Key Vault (AKV) in your subscription. You will find instructions [here](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal)
 - In the AKV add your Azure Active Directory (AAD) ID with the <b>Key Vault Secrets Officer</b> role. Also, make sure this AAD ID is allowed to login to the corresponding Azure Subscription.
@@ -48,8 +54,16 @@ This is needed if you want to run the  notebooks under ResponsibleAI. Otherwise 
   - Name <b>openai-gpt-35-turbo-deployment-name</b> & value obtained from above steps
   - Name <b>openai-text-embedding-deployment-name</b> & value obtained from above steps
   - Name <b>openai-api-version</b> & value obtained from above steps
+ 
+- (Optional) Add the following Secrets in the AKV, if you want to run the notebooks in [ResponsibleAI].  
   - Name <b>content-safety-api-key</b> & value obtained from above steps
   - Name <b>content-safety-endpoint</b> & value obtained from above steps
+ 
+- (Optional) Add the following Secrets in the AKV, if you want to run the notebooks in [SmartPromptWithAzureCognitiveSearch].  
+  - Name <b>cognitive-search-api-key</b> & value obtained from above steps under Azure Cogntive Search
+  - Name <b>cognitive-search-endpoint</b> & value obtained from above steps under Azure Cogntive Search
+  - Name <b>cognitive-search-index</b> & value that you will use to create an index in the notebooks in [SmartPromptWithAzureCognitiveSearch]
+
 #### Authentication
 In order to run the APIs you need to authenticate either with secrets or Managed Identity.
 In our default scenario, you have stored all your API keys in AKV in the previous step.
@@ -64,6 +78,8 @@ For authentication mode, in your OS set the environment variable <b>OPENAI_AUTH_
 - pip install openai
 - pip install numpy, num2words, pandas, matplotlib, scipy, scikit-learn, tiktoken
 - pip install langchain (optional, only if you want to try the LangChain notebooks)
+Optionally, install the below preview azure-search package, if you want to run the [SmartPromptWithAzureCognitiveSearch] notebooks.
+- pip install --index-url=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/ azure-search-documents==11.4.0a20230509004
 ### Operation
 Opem a CommandPromt/terminal/shell and go to the open-ai folder from this code-base.
 In your OS set the environment variables
@@ -82,3 +98,6 @@ This will open up Jupyter Notebook and display all the folders where you have no
 If you do not want to run the notebooks, but the python codes in the PythonCommandLine folder, go to that folder and run
 the python files from there.
 
+[Python 3.x]: https://www.python.org/
+[ResponsibleAI]: https://github.com/tirtho/open-ai/tree/main/ResponsibleAI
+[SmartPromptWithAzureCognitiveSearch]: https://github.com/tirtho/open-ai/tree/main/SmartPromptWithAzureCognitiveSearch
