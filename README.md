@@ -81,7 +81,7 @@ For authentication mode, in your OS set the environment variable <b>OPENAI_AUTH_
 - pip install azure-keyvault, azure-keyvault-certificates, azure-keyvault-keys, azure-keyvault-secrets
 - pip install openai
 - pip install numpy, num2words, pandas, matplotlib, scipy, scikit-learn, tiktoken
-- pip install langchain (optional, only if you want to try the LangChain notebooks)\
+- pip install langchain (optional, only if you want to try the LangChain notebooks)
 
 Optionally, install the below preview azure-search package, if you want to run the [SmartPromptWithAzureCognitiveSearch] notebooks.
 - pip install --index-url=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/ azure-search-documents==11.4.0a20230509004
