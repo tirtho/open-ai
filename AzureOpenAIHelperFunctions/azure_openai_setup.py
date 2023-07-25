@@ -128,6 +128,11 @@ def get_completion_from_messages(
     #     print(str(response.choices[0].message))
     return response.choices[0].message["content"]
 
+# Get the embeddings deployment name
+
+def get_embeddings_text_model_deployment_name():
+    return EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
+    
 # Create the embedding instance
 def get_azure_openai_embeddings(deployment=None):
     # set the environment variables needed for openai package to know to reach out to azure

@@ -2,34 +2,45 @@
 
 import os
 
+from azure.core.credentials import AzureKeyCredential  
+from azure.search.documents import SearchClient  
+from azure.search.documents.indexes import SearchIndexClient  
+from azure.search.documents.models import Vector
+from azure.search.documents.indexes.models import (  
+    SearchIndex,  
+    SearchField,  
+    SearchFieldDataType,  
+    SimpleField,  
+    SearchableField,  
+    SearchIndex,  
+    SemanticConfiguration,  
+    PrioritizedFields,  
+    SemanticField,  
+    SearchField,  
+    SemanticSettings,  
+    VectorSearch,  
+    VectorSearchAlgorithmConfiguration,  
+)  
+
 # The global variables
 COGNITIVE_SEARCH_ENDPOINT_VALUE = ''
 COGNITIVE_SEARCH_KEY_VALUE = ''
 COGNITIVE_SEARCH_INDEX_VALUE = ''
 
-def create_cognitive_search_index(index_name, search_index_client):
-    from azure.core.credentials import AzureKeyCredential  
-    from azure.search.documents import SearchClient  
-    from azure.search.documents.indexes import SearchIndexClient  
-    from azure.search.documents.models import Vector  
-    from azure.search.documents.indexes.models import (  
-        SearchIndex,  
-        SearchField,  
-        SearchFieldDataType,  
-        SimpleField,  
-        SearchableField,  
-        SearchIndex,  
-        SemanticConfiguration,  
-        PrioritizedFields,  
-        SemanticField,  
-        SearchField,  
-        SemanticSettings,  
-        VectorSearch,  
-        VectorSearchAlgorithmConfiguration,  
-    )  
-    VECTOR_SEARCH_CONFIG_NAME = index_name + "-vector-config"
-    SEMANTIC_SEARCH_CONFIG_NAME = index_name + "-semantic-config"
+def vector_search_config_name_from_index_name(index_name):
+    return index_name + "-vector-config"
 
+def semantic_search_config_name_from_index_name(index_name):
+    return index_name + "-semantic-config"
+
+def create_cognitive_search_index(index_name, search_index_client):
+    
+    # postfixing the index name
+    VECTOR_SEARCH_CONFIG_NAME = vector_search_config_name_from_index_name(index_name)
+    SEMANTIC_SEARCH_CONFIG_NAME = semantic_search_config_name_from_index_name(index_name)
+
+    # reference docs :
+    # https://learn.microsoft.com/en-us/python/api/azure-search-documents/azure.search.documents.indexes.models.searchfield?view=azure-python
     fields = [
         SimpleField(name="id", type=SearchFieldDataType.String, 
                         filterable=True, key=True),
@@ -37,38 +48,24 @@ def create_cognitive_search_index(index_name, search_index_client):
                         searchable=True),
         SearchableField(name="content", type=SearchFieldDataType.String,
                         searchable=True),
-        SearchableField(name="tag", type=SearchFieldDataType.String,
+        SearchableField(name="bill_id", type=SearchFieldDataType.String,
                         filterable=True, searchable=True),
         SearchableField(name="metadata", type=SearchFieldDataType.String,
                         filterable=True, searchable=True),
         SearchField(name="content_vector", type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
-                    searchable=True,
-                    dimensions=1536, vector_search_configuration=VECTOR_SEARCH_CONFIG_NAME)
+                    searchable=True, filterable=False, 
+                    sortable=False, facetable=False, 
+                    dimensions=1536, 
+                    vector_search_configuration=VECTOR_SEARCH_CONFIG_NAME)
     ]
 
-    vector_search_config = VectorSearch(
-        algorithm_configurations=[
-            VectorSearchAlgorithmConfiguration(
-                name=VECTOR_SEARCH_CONFIG_NAME,
-                kind="hnsw",
-                hnsw_parameters={
-                    "m": 4,
-                    "efConstruction": 400,
-                    "metric": "cosine"
-                }
-            )
-        ]
-    )
+    vector_search_config = get_vector_configuration(index_name)
 
-    semantic_search_config = SemanticConfiguration(
-        name=SEMANTIC_SEARCH_CONFIG_NAME,
-        prioritized_fields=PrioritizedFields(
-            title_field=SemanticField(field_name="title"),
-            prioritized_keywords_fields=[SemanticField(field_name="tag")],
-            prioritized_content_fields=[SemanticField(field_name="content")]
-        )
-    )
-
+    # reference docs : 
+    # https://learn.microsoft.com/en-us/azure/search/semantic-how-to-query-request?tabs=portal%2Cportal-query#2---create-a-semantic-configuration
+    # https://learn.microsoft.com/en-us/python/api/azure-search-documents/azure.search.documents.indexes.models.semanticconfiguration?view=azure-python-preview
+    semantic_search_config = get_semantic_configuration(index_name)
+    
     # Create the semantic settings with the configuration
     semantic_settings = SemanticSettings(configurations=[semantic_search_config])
 
@@ -82,6 +79,31 @@ def create_cognitive_search_index(index_name, search_index_client):
     result = search_index_client.create_or_update_index(index)
     return result
 
+def get_vector_configuration(index_name):
+    return VectorSearch(
+                algorithm_configurations=[
+                    VectorSearchAlgorithmConfiguration(
+                        name=vector_search_config_name_from_index_name(index_name),
+                        kind="hnsw",
+                        hnsw_parameters={
+                            "m": 4,
+                            "efConstruction": 400,
+                            "metric": "cosine"
+                        }
+                    )
+                ]
+            )
+    
+def get_semantic_configuration(index_name):
+    return SemanticConfiguration(
+                name=semantic_search_config_name_from_index_name(index_name),
+                prioritized_fields=PrioritizedFields(
+                    title_field=SemanticField(field_name="title"),
+                    prioritized_keywords_fields=[SemanticField(field_name="bill_id")],
+                    prioritized_content_fields=[SemanticField(field_name="content")]
+                )
+            )
+    
 def set_cognitive_search_config():
     #KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth
     match os.getenv('OPENAI_AUTH_TYPE'):
