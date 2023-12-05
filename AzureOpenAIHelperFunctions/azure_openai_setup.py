@@ -88,6 +88,20 @@ def get_config_from_key_vault_mi_auth():
 
     return
 
+# Get the token or api secret from AAD
+# and the remaining parameters from Key Vault
+def get_config_from_aad():
+    get_config_from_key_vault_mi_auth()
+
+    from azure.identity import DefaultAzureCredential
+    default_credential = DefaultAzureCredential()
+    token = default_credential.get_token("https://cognitiveservices.azure.com/.default")
+    openai.api_type = "azure_ad"
+    openai.api_key = token.token
+    print("Key:: %s, \nURL:: %s, \nVersion:: %s, \nType:: %s\n" % 
+          (openai.api_key, openai.api_base, openai.api_version, openai.api_type))
+    return
+
 # Prompt Completion Function
 def get_completion(
                     prompt, 

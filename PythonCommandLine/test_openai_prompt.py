@@ -29,10 +29,9 @@ So I checked with Disney. They said they have the black pearl from their \
 Pirates of the Carribean (Curse of the Black Pearl) movie at their Studio. \
 They can ship it overnight. But it will cost $ 1million.
 """
-prompt = f"""
-Summarize the text delimited by triple backticks \ 
-into three sentences.
-```{text}```
+prompt = f"""Summarize the text delimited by triple backticks in three sentences. \
+```{text}``` \
 """
+print(f'-----------------------\nPrompt::\n{prompt}\n-----------------------')
 response = get_completion(prompt)
-print(response)
+print(f'-----------------------\nCompletion::\n{response}\n-----------------------')
