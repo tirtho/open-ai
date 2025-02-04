@@ -1,7 +1,7 @@
 import openai
 import sys
 
-from azure_openai_setup import set_openai_config, get_completion
+from azure_openai_setup import get_openai_client, set_openai_config, get_chat_completion
 
 # Get OpenAI creds based on the OS environment variable 
 # OPENAI_AUTH_TYPE
@@ -9,7 +9,15 @@ from azure_openai_setup import set_openai_config, get_completion
 # = KeysFromAKVWithCLIAuth => get the credentials from Azure Key Vault with CLI Auth
 # = KeysFromAKVWithMI => get the credentials from Azure Key Vault with Managed Identity
 # = KeysFromManagedId => authenticate with Managed Identity and get access to Azure Open AI
-set_openai_config()
+
+THE_MODEL = 'gpt-35-turbo-16k'
+endpoint, key, version = set_openai_config()
+#print(f"{endpoint}, {key}, {version}")
+status, client = get_openai_client(aoai_endpoint = endpoint, 
+                                   aoai_api_key = key, 
+                                   aoai_version = version
+                                  )
+print(f"Connecting to Open AI returned status as {status}")
 
 text = f"""
 My ancestral home is in Mars. I mean the planet Mars that \
@@ -33,5 +41,15 @@ prompt = f"""Summarize the text delimited by triple backticks in three sentences
 ```{text}``` \
 """
 print(f'-----------------------\nPrompt::\n{prompt}\n-----------------------')
-response = get_completion(prompt)
-print(f'-----------------------\nCompletion::\n{response}\n-----------------------')
+my_prompt = [
+              {
+                "role": "user", 
+                "content": f"{prompt}"
+                }
+              ]      
+tokens_used, finish_reason, completion = get_chat_completion(
+                                                the_client=client, 
+                                                the_model=THE_MODEL,
+                                                the_messages=my_prompt)
+#print(f"Completion: {completion}\nTokens used: {tokens_used}\nFinish Reason: {finish_reason}")
+print(f'-----------------------\nCompletion::\n{completion}\n-----------------------')

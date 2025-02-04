@@ -1,60 +1,46 @@
 #!pip install azure-keyvault-secrets
 #!pip install openai
 
-import openai
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from openai import AzureOpenAI
 import os
-from langchain.embeddings import OpenAIEmbeddings
-
-# The global variables with any default values
-COMPLETION_MODEL = 'gpt-3.5-turbo'
-COMPLETION_MODEL_DEPLOYMENT_NAME = ''
-EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = ''
+import requests
 
 def set_openai_config():
     #KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth, KeysFromManagedId
     match os.getenv('OPENAI_AUTH_TYPE'):
         case 'KeysFromAKVWithCLIAuth':
-            get_config_from_key_vault_cli_auth()
-            print("Got Azure OpenAI Credentials from Azure Key Vault with Azure CLI Auth")
+            print("Getting Azure OpenAI Credentials from Azure Key Vault with Azure CLI Auth")
+            return get_config_from_key_vault_cli_auth()
         case 'KeysFromAKVWithMI':
-            get_config_from_key_vault_mi_auth()
-            print("Got Azure OpenAI Credentials from Azure Key Vault with Azure Managed Identity Auth")
+            print("Getting Azure OpenAI Credentials from Azure Key Vault with Azure Managed Identity Auth")
+            return get_config_from_key_vault_mi_auth()
         case 'KeysFromManagedId':
-            get_config_from_aad()
-            print("Got Azure OpenAI Credentials using Azure Managed ID")
+            print("Getting Azure OpenAI Credentials using Azure Managed ID")
+            return get_config_from_aad()
         case 'KeysFromEnv':
-            get_config_from_os_env()
-            print("Got Azure OpenAI Credentials from environment variables set in the OS")
+            print("Getting Azure OpenAI Credentials from environment variables set in the OS")
+            return get_config_from_os_env()
         case _:
             print("Setup environment variable OPENAI_AUTH_TYPE to one of KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth, KeysFromManagedId")
-    return
+    return None, None, None
 
 # Read all the needed secrets from AKV
 def set_openai_global_config_parameters(client):
-    openai.api_key = client.get_secret('openai-api-key').value
-    openai.api_base = client.get_secret('openai-endpoint').value
-    openai.api_version = client.get_secret('openai-api-version').value
-    openai.api_type = 'azure'
-    global COMPLETION_MODEL_DEPLOYMENT_NAME
-    global EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
-    COMPLETION_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-gpt-35-turbo-deployment-name').value
-    EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME = client.get_secret('openai-text-embedding-deployment-name').value
-    return
-
-# Return the global variables with their current value
-def get_openai_global_config_parameters():
-    return openai, COMPLETION_MODEL, COMPLETION_MODEL_DEPLOYMENT_NAME
+    api_key = client.get_secret('openai-api-key').value
+    api_endpoint = client.get_secret('openai-endpoint').value
+    api_version = client.get_secret('openai-api-version').value
+    return api_endpoint, api_key, api_version
 
 # Use this only for debugging purposes, in case you need a quick and dirty
 # way to add the keys to bypass the AKV approach.
 def get_config_from_os_env():
-    openai.api_key = os.getenv('OPENAI_KEY')
-    openai.api_base = os.getenv('OPENAI_ENDPOINT')
-    # 2023-03-15-preview
-    openai.api_version = os.getenv('OPENAI_API_VERSION')
-    openai.api_type = 'azure'
+    api_key = os.getenv('OPENAI_API_KEY')
+    api_endpoint = os.getenv('OPENAI_API_ENDPOINT')
+    api_version = os.getenv('OPENAI_API_VERSION')
     #print("Key %s, URL %s, Version %s, Type %s" % (openai.api_key, openai.base, openai.api_version, openai.api_type))
-    return
+    return api_endpoint, api_key, api_version
+ 
 
 # Using Azure Key Vault to get Azure OpenAi Endpoint and Key
 # to Authenticate Azure OpenAI to run API calls
@@ -68,10 +54,8 @@ def get_config_from_key_vault_cli_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
-    set_openai_global_config_parameters(client)
+    return set_openai_global_config_parameters(client)
     
-    return
-
 # Using Azure Key Vault to get Azure OpenAi Endpoint and Key
 # to Authenticate Azure OpenAI to run API calls
 # Using Managed Identity Auth for script to access Key Vault
@@ -84,93 +68,77 @@ def get_config_from_key_vault_mi_auth():
 
     VAULT_URL = os.getenv('KEY_VAULT_URL')
     client = SecretClient(vault_url=VAULT_URL, credential=credential)
-    set_openai_global_config_parameters(client)
-
-    return
+    return set_openai_global_config_parameters(client)
 
 # Get the token or api secret from AAD
 # and the remaining parameters from Key Vault
 def get_config_from_aad():
-    get_config_from_key_vault_mi_auth()
+    key, endpoint, version = get_config_from_key_vault_mi_auth()
 
     from azure.identity import DefaultAzureCredential
     default_credential = DefaultAzureCredential()
     token = default_credential.get_token("https://cognitiveservices.azure.com/.default")
-    openai.api_type = "azure_ad"
-    openai.api_key = token.token
-    print("Key:: %s, \nURL:: %s, \nVersion:: %s, \nType:: %s\n" % 
-          (openai.api_key, openai.api_base, openai.api_version, openai.api_type))
-    return
+    print("Key:: %s, \nEndpoint:: %s, \nVersion:: %s\n" % 
+          (key, endpoint, version))
+    return endpoint, token.token, verson
 
-# Prompt Completion Function
-def get_completion(
-                    prompt, 
-                    engine=None, 
-                    model=None,
-                    temperature=0
-                ):
-    messages = [{"role": "user", "content": prompt}]
-    if engine is None:
-        engine = COMPLETION_MODEL_DEPLOYMENT_NAME
-    if model is None:
-        model = COMPLETION_MODEL
-    response = openai.ChatCompletion.create(
-        engine=engine,
-        model=model,
-        messages=messages,
-        temperature=temperature
+def get_openai_client(aoai_endpoint, aoai_api_key, aoai_version):
+  try:
+    #--- api_key = os.getenv("OPENAI_API_KEY")
+    if aoai_api_key and not aoai_api_key.isspace():
+      # the string is non-empty
+      client = AzureOpenAI(
+                api_key=aoai_api_key,
+                azure_endpoint=aoai_endpoint,
+                api_version=aoai_version
+              )
+      print("\nGot OPENAI API Key from environment variable")
+      return True, client
+    else:
+      # the string is empty
+      try:
+        print(f"\nCould not get API key from environment variable OPENAI_API_KEY. Trying Managed ID")
+        token_provider = get_bearer_token_provider (
+          DefaultAzureCredential(),
+          "https://cognitiveservices.azure.com/.default"          
+        )
+        client = AzureOpenAI(
+          azure_ad_token_provider=token_provider,
+          azure_endpoint=aoai_endpoint,
+          api_version=aoai_version
+        )
+        print("\nAuthenticated successfully with AAD token")
+        return True, client
+      except:
+        print("\nSomething went wrong getting token with Managed Identity")
+        return False, None
+  except:
+    print("\nSomething went wrong getting access key from environment variable")
+    return False, None
+
+# Returns total tokens used and the chat completion
+def get_chat_completion(the_client, the_model, the_messages):
+    completion = the_client.chat.completions.create(
+        model=the_model,
+        messages=the_messages,
+        temperature=0,
+        max_tokens=1000,
+        #top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None
     )
-    return response.choices[0].message["content"]
+    return completion.usage.total_tokens, completion.choices[0].finish_reason, completion.choices[0].message.content  
 
-# Prompt Message Function, most suitable for Chtbots
-def get_completion_from_messages(
-                        messages, 
-                        engine=None, 
-                        model=None,
-                        temperature=0
-                    ):
-    if engine is None:
-        engine = COMPLETION_MODEL_DEPLOYMENT_NAME
-    if model is None:
-        model = COMPLETION_MODEL
-    response = openai.ChatCompletion.create(
-        engine=engine,
-        model=model,
-        messages=messages,
-        temperature=temperature # this is the degree of randomness of the model's output
-    )
-    #     print(str(response.choices[0].message))
-    return response.choices[0].message["content"]
+# Find cosine similarty between the vectors
+import numpy as np
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-# Get the embeddings deployment name
-
-def get_embeddings_text_model_deployment_name():
-    return EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
-    
-# Create the embedding instance
-def get_azure_openai_embeddings(deployment=None):
-    # set the environment variables needed for openai package to know to reach out to azure
-    import os
-    os.environ["OPENAI_API_TYPE"] = openai.api_type
-    os.environ["OPENAI_API_BASE"] = openai.api_base
-    os.environ["OPENAI_API_KEY"] = openai.api_key
-    os.environ["OPENAI_API_VERSION"] = openai.api_version
-
-    if deployment is None:
-        deployment = EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME
-    return OpenAIEmbeddings(deployment=deployment)
-
-# Generate Embeddings
-def get_embeddings_from_text(
-                        text,
-                        engine=None
-                    ):
-    if engine is None:
-        engine = EMBEDDINGS_TEXT_MODEL_DEPLOYMENT_NAME 
-    response = openai.Embedding.create(
-        input=text,
-        engine=engine
-    )
-    # print(str(response['data'][0]['embedding']))
-    return response['data'][0]['embedding']
-    
+# Return vectors for a given text using the ADA model
+def generate_embedding(the_client, the_model, the_text):
+    response = the_client.embeddings.create(
+                  input=the_text, 
+                  model=the_model
+                )
+    return response.data[0].embedding
