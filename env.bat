@@ -1,9 +1,0 @@
-@echo off
-SET PYTHONPATH=%cd%\AzureOpenAIHelperFunctions
-
-REM The options for Azure OpenAI Auth are KeysFromEnv, KeysFromAKVWithMI, KeysFromAKVWithCLIAuth, KeysFromManagedId
-SET OPENAI_AUTH_TYPE=KeysFromAKVWithCLIAuth
-SET KEY_VAULT_URL=%KEY_VAULT_URL%
-
-SET AZURE_AI_KEY=%ALL_AI_SERVICES_API_KEY%
-SET AZURE_AI_ENDPOINT=%ALL_AI_SERVICES_ENDPOINT%
